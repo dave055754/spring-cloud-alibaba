@@ -3,9 +3,9 @@ dubbo:
     #   The Spring Cloud Dubbo's registry extension
     ##  the default value of dubbo-provider-services is "*", that means to subscribe all providers,
     ##  thus it's optimized if subscriber specifies the required providers.
-    address: spring-cloud://localhost
+#    address: spring-cloud://localhost
 #   The traditional Dubbo's registry also is supported
-#   address: zookeeper://127.0.0.1:2181
+   address: nacos://10.199.198.220:8848
   cloud:
     # The subscribed services in consumer side
     subscribed-services: ${provider.application.name}
@@ -16,3 +16,22 @@ server:
 provider:
   application:
     name: spring-cloud-alibaba-dubbo-provider
+
+feign:
+  hystrix:
+    #feign开启hystrix支持
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+#ribbon的超时时间, 防止feign调用超时
+ribbon:
+  ReadTimeout: 15000
+  ConnectTimeout: 15000
+  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  OkToRetryOnAllOperations: false  #是否所有操作都重试

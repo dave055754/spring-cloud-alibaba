@@ -5,15 +5,17 @@ dubbo:
     dubbo:
       name: dubbo
       port: -1
+      accesslog: true
     rest:
       name: rest
-      port: 9090
-      server: netty
+      port: 8080
+      server: tomcat
+      accesslog: true
   registry:
-#   The Spring Cloud Dubbo's registry extension
-    address: spring-cloud://localhost
-#   The traditional Dubbo's registry
-#   address: zookeeper://127.0.0.1:2181
-feign:
-  hystrix:
-    enabled: true
+    #   The Spring Cloud Dubbo's registry extension
+    #    address: spring-cloud://localhost
+    #   The traditional Dubbo's registry
+    address: nacos://10.199.198.220:8848
+#feign:
+#  hystrix:
+#    enabled: true

@@ -60,10 +60,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @EnableCaching
 public class DubboSpringCloudConsumerBootstrap {
 
-	@Reference
+	// @Reference
 	private UserService userService;
 
-	@Reference(version = "1.0.0", protocol = "dubbo")
+	@Reference(protocol = "rest")
 	private RestService restService;
 
 	@Autowired
@@ -85,22 +85,22 @@ public class DubboSpringCloudConsumerBootstrap {
 	public ApplicationRunner userServiceRunner() {
 		return arguments -> {
 
-			User user = new User();
-			user.setId(1L);
-			user.setName("小马哥");
-			user.setAge(33);
-
-			// save User
-			System.out.printf("UserService.save(%s) : %s\n", user,
-					userService.save(user));
-
-			// find all Users
-			System.out.printf("UserService.findAll() : %s\n", user,
-					userService.findAll());
-
-			// remove User
-			System.out.printf("UserService.remove(%d) : %s\n", user.getId(),
-					userService.remove(user.getId()));
+			// User user = new User();
+			// user.setId(1L);
+			// user.setName("小马哥");
+			// user.setAge(33);
+			//
+			// // save User
+			// System.out.printf("UserService.save(%s) : %s\n", user,
+			// userService.save(user));
+			//
+			// // find all Users
+			// System.out.printf("UserService.findAll() : %s\n", user,
+			// userService.findAll());
+			//
+			// // remove User
+			// System.out.printf("UserService.remove(%d) : %s\n", user.getId(),
+			// userService.remove(user.getId()));
 
 		};
 	}
@@ -115,19 +115,19 @@ public class DubboSpringCloudConsumerBootstrap {
 	private void callAll() {
 
 		// To call /path-variables
-		callPathVariables();
+		// callPathVariables();
 
 		// To call /headers
-		callHeaders();
+		// callHeaders();
 
 		// To call /param
 		callParam();
 
 		// To call /params
-		callParams();
+		// callParams();
 
 		// To call /request/body/map
-		callRequestBodyMap();
+		// callRequestBodyMap();
 	}
 
 	@Scheduled(fixedDelay = 10 * 1000L)
@@ -137,7 +137,7 @@ public class DubboSpringCloudConsumerBootstrap {
 
 	private void callPathVariables() {
 		// Dubbo Service call
-		System.out.println(restService.pathVariables("a", "b", "c"));
+//		System.out.println(restService.pathVariables("a", "b", "c"));
 		// Spring Cloud Open Feign REST Call (Dubbo Transported)
 		System.out.println(dubboFeignRestService.pathVariables("c", "b", "a"));
 		// Spring Cloud Open Feign REST Call
@@ -151,7 +151,7 @@ public class DubboSpringCloudConsumerBootstrap {
 
 	private void callHeaders() {
 		// Dubbo Service call
-		System.out.println(restService.headers("a", "b", 10));
+//		System.out.println(restService.headers("a", "b", 10));
 		// Spring Cloud Open Feign REST Call (Dubbo Transported)
 		System.out.println(dubboFeignRestService.headers("b", 10, "a"));
 		// Spring Cloud Open Feign REST Call
@@ -160,16 +160,16 @@ public class DubboSpringCloudConsumerBootstrap {
 
 	private void callParam() {
 		// Dubbo Service call
-		System.out.println(restService.param("mercyblitz"));
+//		System.out.println(restService.param("mercyblitz"));
 		// Spring Cloud Open Feign REST Call (Dubbo Transported)
-		System.out.println(dubboFeignRestService.param("mercyblitz"));
+		 System.out.println(dubboFeignRestService.param("mercyblitz"));
 		// Spring Cloud Open Feign REST Call
 		// System.out.println(feignRestService.param("mercyblitz"));
 	}
 
 	private void callParams() {
 		// Dubbo Service call
-		System.out.println(restService.params(1, "1"));
+//		System.out.println(restService.params(1, "1"));
 		// Spring Cloud Open Feign REST Call (Dubbo Transported)
 		System.out.println(dubboFeignRestService.params("1", 1));
 		// Spring Cloud Open Feign REST Call
@@ -188,7 +188,7 @@ public class DubboSpringCloudConsumerBootstrap {
 		data.put("age", 33);
 
 		// Dubbo Service call
-		System.out.println(restService.requestBodyMap(data, "Hello,World"));
+//		System.out.println(restService.requestBodyMap(data, "Hello,World"));
 		// Spring Cloud Open Feign REST Call (Dubbo Transported)
 		System.out.println(dubboFeignRestService.requestBody("Hello,World", data));
 		// Spring Cloud Open Feign REST Call
@@ -236,7 +236,7 @@ public class DubboSpringCloudConsumerBootstrap {
 	}
 
 	@FeignClient("${provider.application.name}")
-	@DubboTransported(protocol = "dubbo")
+	@DubboTransported(protocol = "rest")
 	public interface DubboFeignRestService {
 
 		@GetMapping("/param")

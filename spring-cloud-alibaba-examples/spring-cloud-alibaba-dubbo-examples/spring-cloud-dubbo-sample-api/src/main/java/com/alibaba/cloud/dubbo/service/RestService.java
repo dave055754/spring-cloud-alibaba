@@ -16,27 +16,33 @@
 
 package com.alibaba.cloud.dubbo.service;
 
-import java.util.Map;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
  * Rest Service.
  *
  * @author <a href="mailto:mercyblitz@gmail.com">Mercy</a>
  */
+@Path("/")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface RestService {
 
-	String param(String param);
+	@Path("param")
+	@GET
+	String param(@QueryParam("param") String param);
 
-	String params(int a, String b);
-
-	String headers(String header, String header2, Integer param);
-
-	String pathVariables(String path1, String path2, String param);
-
-	String form(String form);
-
-	User requestBodyMap(Map<String, Object> data, String param);
-
-	Map<String, Object> requestBodyUser(User user);
+	// String params(int a, String b);
+	//
+	// String headers(String header, String header2, Integer param);
+	//
+	// String pathVariables(String path1, String path2, String param);
+	//
+	// String form(String form);
+	//
+	// User requestBodyMap(Map<String, Object> data, String param);
+	//
+	// Map<String, Object> requestBodyUser(User user);
 
 }
